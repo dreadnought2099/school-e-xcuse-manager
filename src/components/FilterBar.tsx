@@ -59,17 +59,17 @@ const FilterBar = () => {
         <div className="flex-1 flex flex-col gap-1">
           <label className="text-sm font-medium">Class</label>
           <Select 
-            value={filterByClass || ""} 
-            onValueChange={(val) => setFilterByClass(val || null)}
+            value={filterByClass || "all"} 
+            onValueChange={(val) => setFilterByClass(val === "all" ? null : val)}
           >
             <SelectTrigger>
               <SelectValue placeholder="Filter by class" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Classes</SelectItem>
+              <SelectItem value="all">All Classes</SelectItem>
               {classes.map((cls) => (
-                <SelectItem key={cls} value={cls || ""}>
-                  {cls}
+                <SelectItem key={cls} value={cls || "unknown"}>
+                  {cls || "Unassigned"}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -79,14 +79,14 @@ const FilterBar = () => {
         <div className="flex-1 flex flex-col gap-1">
           <label className="text-sm font-medium">Status</label>
           <Select 
-            value={filterByStatus || ""} 
-            onValueChange={(val) => setFilterByStatus(val as any || null)}
+            value={filterByStatus || "all"} 
+            onValueChange={(val) => setFilterByStatus(val === "all" ? null : val as any)}
           >
             <SelectTrigger>
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Statuses</SelectItem>
+              <SelectItem value="all">All Statuses</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="approved">Approved</SelectItem>
               <SelectItem value="denied">Denied</SelectItem>
