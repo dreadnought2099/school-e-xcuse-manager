@@ -50,10 +50,10 @@ const EditLetterDialog = ({ letter, isOpen, onClose }: EditLetterDialogProps) =>
         attachmentUrl
       });
       
-      toast("Success", "Letter updated successfully");
+      toast.success("Letter updated successfully");
       onClose();
     } catch (error) {
-      toast("Error", "Failed to update letter");
+      toast.error("Failed to update letter");
     }
   };
   
@@ -61,7 +61,7 @@ const EditLetterDialog = ({ letter, isOpen, onClose }: EditLetterDialogProps) =>
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       if (file.size > 5 * 1024 * 1024) {
-        toast("Error", "File size must be less than 5MB");
+        toast.error("File size must be less than 5MB");
         return;
       }
       setAttachment(file);

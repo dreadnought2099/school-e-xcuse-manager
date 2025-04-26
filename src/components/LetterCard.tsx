@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { ExcuseLetter } from '@/types';
 import { useApp } from '@/context/AppContext';
@@ -75,9 +76,9 @@ const LetterCard = ({ letter }: LetterCardProps) => {
   const handleDelete = async () => {
     try {
       await deleteLetter(letter.id);
-      toast("Success", "Letter deleted successfully");
+      toast.success("Letter deleted successfully");
     } catch (error) {
-      toast("Error", "Failed to delete letter");
+      toast.error("Failed to delete letter");
     }
     setShowDeleteDialog(false);
   };
