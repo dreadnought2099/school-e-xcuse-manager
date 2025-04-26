@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { ExcuseLetter, Status, Student, Reviewer } from '../types';
 import { toast } from '@/components/ui/sonner';
@@ -85,6 +84,10 @@ interface AppContextType {
   setFilterByClass: (className: string | null) => void;
   setFilterByStatus: (status: Status | null) => void;
   clearFilters: () => void;
+  
+  // Update letter
+  updateLetter: (id: string, updates: Partial<ExcuseLetter>) => void;
+  deleteLetter: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -182,6 +185,26 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     toast.success(`Letter status updated to ${status}`);
   };
   
+  // Update letter
+  const updateLetter = (id: string, updates: Partial<ExcuseLetter>) => {
+    setLetters(prev =>
+      prev.map(letter =>
+        letter.id === id
+          ? {
+              ...letter,
+              ...updates,
+              updatedAt: new Date()
+            }
+          : letter
+      )
+    );
+  };
+  
+  // Delete letter
+  const deleteLetter = (id: string) => {
+    setLetters(prev => prev.filter(letter => letter.id !== id));
+  };
+  
   // Apply filters to get filtered letters
   const filteredLetters = letters.filter(letter => {
     // Filter by date (if set)
@@ -242,6 +265,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setFilterByClass,
     setFilterByStatus,
     clearFilters,
+    updateLetter,
+    deleteLetter,
   };
   
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
