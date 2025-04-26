@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { toast } from '@/components/ui/sonner';
@@ -29,8 +28,7 @@ const SubmissionForm = () => {
     e.preventDefault();
     
     if (!studentId || !absenceDate || !reason) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: "Please complete all required fields",
         variant: "destructive"
       });
@@ -42,7 +40,7 @@ const SubmissionForm = () => {
     today.setHours(0, 0, 0, 0);
     
     if (absenceDate < today) {
-      toast({
+      toast("Date Error", {
         description: "You cannot submit an excuse letter for past dates",
         variant: "destructive"
       });
@@ -73,11 +71,11 @@ const SubmissionForm = () => {
       setReason('');
       setAttachment(null);
       
-      toast({
-        description: "Excuse letter submitted successfully",
+      toast("Success", {
+        description: "Excuse letter submitted successfully"
       });
     } catch (error) {
-      toast({
+      toast("Error", {
         description: "Failed to submit excuse letter",
         variant: "destructive"
       });
@@ -91,7 +89,7 @@ const SubmissionForm = () => {
       const file = e.target.files[0];
       // Check file size (5MB limit)
       if (file.size > 5 * 1024 * 1024) {
-        toast({
+        toast("File Size Error", {
           description: "File size must be less than 5MB",
           variant: "destructive"
         });
