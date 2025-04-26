@@ -13,12 +13,20 @@ interface ImagePreviewDialogProps {
 const ImagePreviewDialog = ({ imageUrl, isOpen, onClose }: ImagePreviewDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl p-0">
-        <img 
-          src={imageUrl} 
-          alt="Attachment preview"
-          className="w-full h-auto rounded-lg"
-        />
+      <DialogContent className="max-w-3xl">
+        <div className="relative w-full h-full">
+          <img 
+            src={imageUrl} 
+            alt="Attachment preview"
+            className="w-full h-auto object-contain rounded-lg"
+            style={{ maxHeight: '80vh' }}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.onerror = null;
+              toast.error("Failed to load image");
+            }}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );
