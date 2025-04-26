@@ -1,14 +1,14 @@
 
 import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Upload } from 'lucide-react';
 import {
   Popover,
   PopoverContent,
@@ -18,14 +18,14 @@ import { cn } from '@/lib/utils';
 
 const SubmissionForm = () => {
   const { students, submitLetter } = useApp();
-  const { toast } = useToast();
   
   const [studentId, setStudentId] = useState('');
   const [absenceDate, setAbsenceDate] = useState<Date>();
   const [reason, setReason] = useState('');
   const [attachment, setAttachment] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!studentId || !absenceDate || !reason) {
@@ -39,38 +39,65 @@ const SubmissionForm = () => {
 
     // Check if the absence date is in the future
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to start of day for comparison
+    today.setHours(0, 0, 0, 0);
     
     if (absenceDate < today) {
       toast({
-        title: "Error",
         description: "You cannot submit an excuse letter for past dates",
         variant: "destructive"
       });
       return;
     }
+
+    setIsSubmitting(true);
     
-    // Create a mock attachment URL for demonstration
-    const attachmentUrl = attachment ? `/uploads/${attachment.name}` : undefined;
-    
-    submitLetter({
-      studentId,
-      absenceDate,
-      reason,
-      attachmentUrl,
-      date: new Date()
-    });
-    
-    // Clear form
-    setStudentId('');
-    setAbsenceDate(undefined);
-    setReason('');
-    setAttachment(null);
+    try {
+      let attachmentUrl: string | undefined;
+      
+      if (attachment) {
+        // Create a mock URL for the attachment (in a real app, this would be handled by file storage)
+        attachmentUrl = URL.createObjectURL(attachment);
+      }
+      
+      await submitLetter({
+        studentId,
+        absenceDate,
+        reason,
+        attachmentUrl,
+        date: new Date()
+      });
+      
+      // Clear form after successful submission
+      setStudentId('');
+      setAbsenceDate(undefined);
+      setReason('');
+      setAttachment(null);
+      
+      toast({
+        description: "Excuse letter submitted successfully",
+      });
+    } catch (error) {
+      toast({
+        description: "Failed to submit excuse letter",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setAttachment(e.target.files[0]);
+      const file = e.target.files[0];
+      // Check file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          description: "File size must be less than 5MB",
+          variant: "destructive"
+        });
+        return;
+      }
+      setAttachment(file);
     }
   };
 
@@ -143,19 +170,41 @@ const SubmissionForm = () => {
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="attachment">Attachment (Optional)</Label>
-        <Input
-          id="attachment"
-          type="file"
-          onChange={handleFileChange}
-          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-        />
+        <Label htmlFor="attachment">Medical Certificate or Supporting Document</Label>
+        <div className="flex items-center gap-4">
+          <Input
+            id="attachment"
+            type="file"
+            onChange={handleFileChange}
+            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+            className={cn(
+              "flex-1",
+              attachment && "file:bg-green-50 file:text-green-700"
+            )}
+          />
+          {attachment && (
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={() => setAttachment(null)}
+            >
+              <Upload className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
         <p className="text-xs text-muted-foreground">
           Accepted file types: PDF, JPG, PNG, DOC, DOCX (max 5MB)
         </p>
       </div>
       
-      <Button type="submit" className="w-full">Submit Excuse Letter</Button>
+      <Button 
+        type="submit" 
+        className="w-full" 
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Submitting..." : "Submit Excuse Letter"}
+      </Button>
     </form>
   );
 };
