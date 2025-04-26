@@ -12,18 +12,33 @@ import {
   SelectValue
 } from '@/components/ui/select';
 
-interface ReviewerLoginProps {
+interface ReviewerLogin {
   onSuccess?: () => void;
 }
 
-const ReviewerLogin = ({ onSuccess }: ReviewerLoginProps) => {
+const ReviewerLogin = ({ onSuccess }: ReviewerLogin) => {
   const { reviewers, loginAsReviewer } = useApp();
   const [selectedReviewer, setSelectedReviewer] = useState("");
+  const [password, setPassword] = useState("");
   
   const handleLogin = () => {
-    if (selectedReviewer) {
+    if (!selectedReviewer || !password) {
+      return;
+    }
+
+    // Mock password validation - in a real app, this would be handled securely
+    const mockPasswords = {
+      'R001': 'teacher123',
+      'R002': 'guidance123',
+      'R003': 'admin123'
+    };
+
+    if (mockPasswords[selectedReviewer as keyof typeof mockPasswords] === password) {
       loginAsReviewer(selectedReviewer);
       if (onSuccess) onSuccess();
+      setPassword("");
+    } else {
+      toast.error("Invalid password");
     }
   };
   
@@ -47,21 +62,32 @@ const ReviewerLogin = ({ onSuccess }: ReviewerLoginProps) => {
             </SelectContent>
           </Select>
         </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="password">Password</Label>
+          <Input 
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+          />
+        </div>
         
         <Button 
           className="w-full" 
           onClick={handleLogin} 
-          disabled={!selectedReviewer}
+          disabled={!selectedReviewer || !password}
         >
           Login as Reviewer
         </Button>
         
         <div className="text-sm text-gray-500 mt-4">
-          <p className="mb-2">Demo Reviewer IDs:</p>
+          <p className="mb-2">Demo Reviewer Credentials:</p>
           <ul className="list-disc pl-5">
-            {reviewers.map(reviewer => (
-              <li key={reviewer.id}>{reviewer.id}: {reviewer.name} ({reviewer.role})</li>
-            ))}
+            <li>Ms. Peterson (teacher) - Password: teacher123</li>
+            <li>Mr. Williams (guidance) - Password: guidance123</li>
+            <li>Dr. Carter (admin) - Password: admin123</li>
           </ul>
         </div>
       </div>

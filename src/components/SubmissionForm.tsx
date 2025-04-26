@@ -36,6 +36,19 @@ const SubmissionForm = () => {
       });
       return;
     }
+
+    // Check if the absence date is in the future
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for comparison
+    
+    if (absenceDate < today) {
+      toast({
+        title: "Error",
+        description: "You cannot submit an excuse letter for past dates",
+        variant: "destructive"
+      });
+      return;
+    }
     
     // Create a mock attachment URL for demonstration
     const attachmentUrl = attachment ? `/uploads/${attachment.name}` : undefined;
@@ -60,6 +73,10 @@ const SubmissionForm = () => {
       setAttachment(e.target.files[0]);
     }
   };
+
+  // Get today's date for minimum date restriction
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -105,6 +122,7 @@ const SubmissionForm = () => {
               mode="single"
               selected={absenceDate}
               onSelect={setAbsenceDate}
+              disabled={(date) => date < today}
               initialFocus
               className={cn("p-3 pointer-events-auto")}
             />
