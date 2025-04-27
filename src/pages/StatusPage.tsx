@@ -24,9 +24,9 @@ const StatusPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
   
-  // Redirect admin to dashboard
+  // Redirect reviewers to dashboard
   useEffect(() => {
-    if (currentReviewer?.role === 'admin') {
+    if (currentReviewer) {
       navigate('/dashboard');
     }
   }, [currentReviewer, navigate]);
@@ -145,3 +145,4 @@ const StatusPage = () => {
 };
 
 export default StatusPage;
+
