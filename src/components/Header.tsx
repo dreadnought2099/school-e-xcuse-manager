@@ -21,7 +21,7 @@ const Header = () => {
   const navigate = useNavigate();
   
   return (
-    <header className="bg-school-700 text-white sticky top-0 z-10 shadow-md">
+    <header className="bg-school-700 text-white sticky top-0 z-50 shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2" onClick={() => navigate('/')} role="button">
           <School className="h-6 w-6" />
@@ -61,16 +61,24 @@ const Header = () => {
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button variant="outline" className="focus:outline-none">
                     {currentReviewer.name}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent 
+                  align="end" 
+                  className="bg-white border shadow-md rounded-md min-w-[200px] z-50"
+                >
                   <DropdownMenuLabel>
                     {currentReviewer.role.charAt(0).toUpperCase() + currentReviewer.role.slice(1)}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logoutReviewer}>Logout</DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onSelect={logoutReviewer}
+                    className="cursor-pointer hover:bg-gray-100"
+                  >
+                    Logout
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
