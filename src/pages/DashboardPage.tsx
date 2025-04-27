@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { useApp } from '@/context/AppContext';
 import { useNavigate } from 'react-router-dom';
@@ -6,17 +5,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import FilterBar from '@/components/FilterBar';
 import LetterCard from '@/components/LetterCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import StudentPasswordDialog from '@/components/StudentPasswordDialog';
 
 const DashboardPage = () => {
   const { 
     currentReviewer, 
     filteredLetters,
     filterByStatus,
-    setFilterByStatus
+    setFilterByStatus,
+    students,
   } = useApp();
   const navigate = useNavigate();
   
-  // Redirect if not logged in as reviewer
   useEffect(() => {
     if (!currentReviewer) {
       navigate('/');
@@ -27,7 +27,6 @@ const DashboardPage = () => {
     return null; // Will redirect
   }
   
-  // Count letters by status
   const pendingCount = filteredLetters.filter(l => l.status === 'pending').length;
   const approvedCount = filteredLetters.filter(l => l.status === 'approved').length;
   const deniedCount = filteredLetters.filter(l => l.status === 'denied').length;
@@ -40,7 +39,6 @@ const DashboardPage = () => {
     }
   };
   
-  // Determine which tab should be active
   const activeTab = filterByStatus || 'all';
   
   return (
@@ -84,6 +82,30 @@ const DashboardPage = () => {
           </CardHeader>
         </Card>
       </div>
+      
+      {currentReviewer?.role === 'admin' && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Student Management</CardTitle>
+            <CardDescription>Manage student passwords and information</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {students.map((student) => (
+                <Card key={student.id}>
+                  <CardHeader>
+                    <CardTitle className="text-lg">{student.name}</CardTitle>
+                    <CardDescription>ID: {student.id}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <StudentPasswordDialog student={student} />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
       
       <FilterBar />
       

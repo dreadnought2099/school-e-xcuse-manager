@@ -1,6 +1,7 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '@/context/AppContext';
+import { useNavigate } from 'react-router-dom';
 import { 
   Card, 
   CardContent, 
@@ -10,16 +11,25 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { SearchIcon, Lock } from 'lucide-react';
+import { SearchIcon } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
 import LetterCard from '@/components/LetterCard';
 
 const StatusPage = () => {
-  const { letters, students } = useApp();
+  const { letters, students, currentReviewer, updateStudent } = useApp();
   const [studentId, setStudentId] = useState('');
+  const [studentClass, setStudentClass] = useState('');
   const [password, setPassword] = useState('');
   const [searchedId, setSearchedId] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  
+  // Redirect admin to dashboard
+  useEffect(() => {
+    if (currentReviewer?.role === 'admin') {
+      navigate('/dashboard');
+    }
+  }, [currentReviewer, navigate]);
   
   const filteredLetters = searchedId && isAuthenticated
     ? letters.filter(letter => letter.studentId === searchedId)
@@ -43,6 +53,11 @@ const StatusPage = () => {
       return;
     }
     
+    // Update student class if not set
+    if (studentClass && (!student.class || student.class !== studentClass)) {
+      updateStudent(student.id, { ...student, class: studentClass });
+    }
+    
     setSearchedId(studentId);
     setIsAuthenticated(true);
     toast.success("Access granted");
@@ -55,7 +70,7 @@ const StatusPage = () => {
           <CardHeader>
             <CardTitle>Check Status</CardTitle>
             <CardDescription>
-              Enter your student ID and password to check the status of your excuse letters
+              Enter your student ID, class, and password to check the status of your excuse letters
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -69,6 +84,18 @@ const StatusPage = () => {
                   placeholder="Enter your student ID"
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="studentClass" className="block text-sm font-medium mb-1">
+                  Class
+                </label>
+                <Input
+                  id="studentClass"
+                  placeholder="Enter your class (e.g., 12A)"
+                  value={studentClass}
+                  onChange={(e) => setStudentClass(e.target.value)}
                 />
               </div>
               

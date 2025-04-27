@@ -88,6 +88,9 @@ interface AppContextType {
   // Update letter
   updateLetter: (id: string, updates: Partial<ExcuseLetter>) => void;
   deleteLetter: (id: string) => void;
+  
+  // Update student
+  updateStudent: (id: string, updates: Partial<Student>) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -205,6 +208,22 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setLetters(prev => prev.filter(letter => letter.id !== id));
   };
   
+  // Update student
+  const updateStudent = (id: string, updates: Partial<Student>) => {
+    const studentExists = students.find(s => s.id === id);
+    if (!studentExists) {
+      toast.error("Student not found");
+      return;
+    }
+    
+    const updatedStudents = students.map(student =>
+      student.id === id ? { ...student, ...updates } : student
+    );
+    
+    setStudents(updatedStudents);
+    toast.success("Student information updated successfully");
+  };
+  
   // Apply filters to get filtered letters
   const filteredLetters = letters.filter(letter => {
     // Filter by date (if set)
@@ -267,6 +286,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     clearFilters,
     updateLetter,
     deleteLetter,
+    updateStudent,
   };
   
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
