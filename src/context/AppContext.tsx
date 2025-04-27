@@ -101,19 +101,27 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const savedLetters = localStorage.getItem('excuseLetters');
     return savedLetters ? JSON.parse(savedLetters) : mockLetters;
   });
+  
   const [students, setStudents] = useState<Student[]>(mockStudents);
   const [reviewers] = useState<Reviewer[]>(mockReviewers);
-  const [currentReviewer, setCurrentReviewer] = useState<Reviewer | null>(null);
-  
-  // Filters
-  const [filterByDate, setFilterByDate] = useState<Date | null>(null);
-  const [filterByClass, setFilterByClass] = useState<string | null>(null);
-  const [filterByStatus, setFilterByStatus] = useState<Status | null>(null);
-  
+  const [currentReviewer, setCurrentReviewer] = useState<Reviewer | null>(() => {
+    const savedReviewer = localStorage.getItem('currentReviewer');
+    return savedReviewer ? JSON.parse(savedReviewer) : null;
+  });
+
   // Save letters to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('excuseLetters', JSON.stringify(letters));
   }, [letters]);
+
+  // Save currentReviewer to localStorage whenever it changes
+  useEffect(() => {
+    if (currentReviewer) {
+      localStorage.setItem('currentReviewer', JSON.stringify(currentReviewer));
+    } else {
+      localStorage.removeItem('currentReviewer');
+    }
+  }, [currentReviewer]);
   
   // Get a student by ID
   const getStudentById = (id: string) => {
@@ -160,6 +168,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   // Logout reviewer
   const logoutReviewer = () => {
     setCurrentReviewer(null);
+    localStorage.removeItem('currentReviewer');
     toast.info("Logged out successfully");
   };
   
