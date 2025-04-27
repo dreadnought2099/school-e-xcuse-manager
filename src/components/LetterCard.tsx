@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ExcuseLetter } from '@/types';
 import { useApp } from '@/context/AppContext';
@@ -83,7 +82,6 @@ const LetterCard = ({ letter }: LetterCardProps) => {
     setShowDeleteDialog(false);
   };
   
-  // Format dates for display
   const submissionDate = format(new Date(letter.date), "PPP");
   const absenceDate = format(new Date(letter.absenceDate), "PPP");
   
@@ -94,7 +92,12 @@ const LetterCard = ({ letter }: LetterCardProps) => {
           <div className="flex justify-between items-start">
             <div>
               <CardTitle>{letter.studentName}</CardTitle>
-              <CardDescription>ID: {letter.studentId}</CardDescription>
+              <CardDescription>
+                ID: {letter.studentId}
+                {currentReviewer && letter.class && (
+                  <span className="ml-2">| Class: {letter.class}</span>
+                )}
+              </CardDescription>
             </div>
             <StatusBadge status={letter.status} />
           </div>
