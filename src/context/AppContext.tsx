@@ -101,7 +101,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const savedLetters = localStorage.getItem('excuseLetters');
     return savedLetters ? JSON.parse(savedLetters) : mockLetters;
   });
-  const [students] = useState<Student[]>(mockStudents);
+  const [students, setStudents] = useState<Student[]>(mockStudents);
   const [reviewers] = useState<Reviewer[]>(mockReviewers);
   const [currentReviewer, setCurrentReviewer] = useState<Reviewer | null>(null);
   

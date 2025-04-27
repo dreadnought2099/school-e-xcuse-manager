@@ -30,7 +30,7 @@ const StudentPasswordDialog = ({ student }: StudentPasswordDialogProps) => {
       return;
     }
     
-    updateStudent(student.id, { id: student.id, password: newPassword });
+    updateStudent(student.id, { password: newPassword });
     setIsOpen(false);
     setNewPassword('');
   };
