@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { ExcuseLetter, Status, Student, Reviewer } from '../types';
 import { toast } from '@/components/ui/sonner';
@@ -108,6 +109,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const savedReviewer = localStorage.getItem('currentReviewer');
     return savedReviewer ? JSON.parse(savedReviewer) : null;
   });
+
+  // Filters
+  const [filterByDate, setFilterByDate] = useState<Date | null>(null);
+  const [filterByClass, setFilterByClass] = useState<string | null>(null);
+  const [filterByStatus, setFilterByStatus] = useState<Status | null>(null);
 
   // Save letters to localStorage whenever they change
   useEffect(() => {
