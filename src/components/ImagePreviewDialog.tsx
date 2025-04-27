@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
 } from '@/components/ui/dialog';
+import { toast } from '@/components/ui/sonner';
 
 interface ImagePreviewDialogProps {
   imageUrl: string;
