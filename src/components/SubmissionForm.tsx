@@ -183,7 +183,7 @@ const SubmissionForm = () => {
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="attachment">Medical Certificate or Supporting Document</Label>
+        <Label htmlFor="attachment">Medical Certificate or Supporting Document (Optional)</Label>
         <div className="flex items-center gap-4">
           <Input
             id="attachment"
@@ -207,7 +207,7 @@ const SubmissionForm = () => {
           )}
         </div>
         <p className="text-xs text-muted-foreground">
-          Accepted file types: PDF, JPG, PNG, DOC, DOCX (max 5MB)
+          Optional: Accepted file types: PDF, JPG, PNG, DOC, DOCX (max 5MB)
         </p>
       </div>
       

@@ -13,7 +13,6 @@ const DashboardPage = () => {
     filteredLetters,
     filterByStatus,
     setFilterByStatus,
-    students,
   } = useApp();
   const navigate = useNavigate();
   
@@ -82,30 +81,6 @@ const DashboardPage = () => {
           </CardHeader>
         </Card>
       </div>
-      
-      {currentReviewer?.role === 'admin' && (
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Student Management</CardTitle>
-            <CardDescription>Manage student passwords and information</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {students.map((student) => (
-                <Card key={student.id}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{student.name}</CardTitle>
-                    <CardDescription>ID: {student.id}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <StudentPasswordDialog student={student} />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
       
       <FilterBar />
       
