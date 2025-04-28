@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { ExcuseLetter, Status, Student, Reviewer } from '../types';
 import { toast } from '@/components/ui/sonner';
@@ -95,6 +94,9 @@ interface AppContextType {
   
   // Update student
   updateStudent: (id: string, updates: Partial<Student>) => void;
+  
+  // Update reviewer
+  updateReviewer: (id: string, updates: Partial<Reviewer>) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -243,6 +245,23 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     toast.success("Student information updated successfully");
   };
   
+  // Update reviewer
+  const updateReviewer = (id: string, updates: Partial<Reviewer>) => {
+    const reviewerExists = reviewers.find(r => r.id === id);
+    if (!reviewerExists) {
+      toast.error("Staff member not found");
+      return;
+    }
+    
+    setReviewers(prev =>
+      prev.map(reviewer =>
+        reviewer.id === id ? { ...reviewer, ...updates } : reviewer
+      )
+    );
+    
+    toast.success("Staff information updated successfully");
+  };
+  
   // Apply filters to get filtered letters
   const filteredLetters = letters.filter(letter => {
     // Filter by date (if set)
@@ -306,6 +325,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     updateLetter,
     deleteLetter,
     updateStudent,
+    updateReviewer,
   };
   
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

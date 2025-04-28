@@ -1,4 +1,3 @@
-
 import { useApp } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
 import { School, Settings } from 'lucide-react';
@@ -61,7 +60,7 @@ const Header = () => {
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="focus:outline-none">
+                  <Button variant="outline" className="focus:outline-none text-white">
                     {currentReviewer.name}
                   </Button>
                 </DropdownMenuTrigger>
@@ -69,13 +68,13 @@ const Header = () => {
                   align="end" 
                   className="bg-white border shadow-md rounded-md min-w-[200px] z-50"
                 >
-                  <DropdownMenuLabel>
+                  <DropdownMenuLabel className="text-gray-700">
                     {currentReviewer.role.charAt(0).toUpperCase() + currentReviewer.role.slice(1)}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
                     onSelect={() => navigate('/user-management')}
-                    className="cursor-pointer hover:bg-gray-100"
+                    className="cursor-pointer text-gray-700 hover:bg-gray-100 focus:text-gray-700"
                     disabled={!isAdmin}
                   >
                     <Settings className="mr-2 h-4 w-4" />
@@ -83,7 +82,7 @@ const Header = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     onSelect={logoutReviewer}
-                    className="cursor-pointer hover:bg-gray-100"
+                    className="cursor-pointer text-gray-700 hover:bg-gray-100 focus:text-gray-700"
                   >
                     Logout
                   </DropdownMenuItem>
