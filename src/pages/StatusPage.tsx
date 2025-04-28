@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useApp } from '@/context/AppContext';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SearchIcon, ArrowLeft } from 'lucide-react';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import LetterCard from '@/components/LetterCard';
 
 const StatusPage = () => {
@@ -44,9 +45,11 @@ const StatusPage = () => {
       return;
     }
     
-    // For demo purposes, we'll use a simple password check
-    // In a real app, this should use proper authentication
-    if (password !== student.id) { // Using student ID as password for demo
+    // For demo purposes, we'll use the student ID as password by default
+    // If a password has been set for the student, use that instead
+    const correctPassword = student.password || student.id;
+    
+    if (password !== correctPassword) {
       toast.error("Incorrect password");
       return;
     }
