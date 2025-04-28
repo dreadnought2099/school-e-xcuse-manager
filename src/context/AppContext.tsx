@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { ExcuseLetter, Status, Student, Reviewer } from '../types';
 import { toast } from '@/components/ui/sonner';
@@ -21,6 +22,7 @@ const mockLetters: ExcuseLetter[] = [
     id: uuidv4(),
     studentId: "S001",
     studentName: "John Doe",
+    class: "12A", // Added class property
     date: new Date(),
     absenceDate: new Date(Date.now() - 86400000 * 2), // 2 days ago
     reason: "Medical appointment",
@@ -33,6 +35,7 @@ const mockLetters: ExcuseLetter[] = [
     id: uuidv4(),
     studentId: "S002",
     studentName: "Jane Smith",
+    class: "11B", // Added class property
     date: new Date(Date.now() - 86400000), // 1 day ago
     absenceDate: new Date(Date.now() - 86400000 * 3), // 3 days ago
     reason: "Family emergency",
@@ -47,6 +50,7 @@ const mockLetters: ExcuseLetter[] = [
     id: uuidv4(),
     studentId: "S003",
     studentName: "Alex Johnson",
+    class: "10C", // Added class property
     date: new Date(Date.now() - 86400000 * 2), // 2 days ago
     absenceDate: new Date(Date.now() - 86400000 * 4), // 4 days ago
     reason: "Transportation issues",
