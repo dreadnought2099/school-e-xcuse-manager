@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { toast } from '@/components/ui/sonner';
@@ -10,6 +9,13 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { CalendarIcon, Upload } from 'lucide-react';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -20,15 +26,19 @@ const SubmissionForm = () => {
   const { students, submitLetter } = useApp();
   
   const [studentId, setStudentId] = useState('');
+  const [studentClass, setStudentClass] = useState('');
   const [absenceDate, setAbsenceDate] = useState<Date>();
   const [reason, setReason] = useState('');
   const [attachment, setAttachment] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
+  // Get unique classes from students
+  const uniqueClasses = Array.from(new Set(students.map(s => s.class))).sort();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!studentId || !absenceDate || !reason) {
+    if (!studentId || !absenceDate || !reason || !studentClass) {
       toast.error("Please complete all required fields");
       return;
     }
@@ -48,12 +58,12 @@ const SubmissionForm = () => {
       let attachmentUrl: string | undefined;
       
       if (attachment) {
-        // Create a mock URL for the attachment (in a real app, this would be handled by file storage)
         attachmentUrl = URL.createObjectURL(attachment);
       }
       
       await submitLetter({
         studentId,
+        class: studentClass,
         absenceDate,
         reason,
         attachmentUrl,
@@ -62,6 +72,7 @@ const SubmissionForm = () => {
       
       // Clear form after successful submission
       setStudentId('');
+      setStudentClass('');
       setAbsenceDate(undefined);
       setReason('');
       setAttachment(null);
@@ -109,9 +120,26 @@ const SubmissionForm = () => {
             </option>
           ))}
         </datalist>
-        <p className="text-sm text-gray-500">
-          Demo student IDs: {students.map(s => s.id).join(', ')}
-        </p>
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="class">Class</Label>
+        <Select 
+          value={studentClass} 
+          onValueChange={setStudentClass}
+          required
+        >
+          <SelectTrigger id="class">
+            <SelectValue placeholder="Select your class" />
+          </SelectTrigger>
+          <SelectContent>
+            {uniqueClasses.map((classOption) => (
+              <SelectItem key={classOption} value={classOption}>
+                {classOption}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       
       <div className="space-y-2">

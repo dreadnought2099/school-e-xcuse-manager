@@ -5,7 +5,7 @@ export interface ExcuseLetter {
   id: string;
   studentId: string;
   studentName: string;
-  class?: string;
+  class: string; // Now required
   date: Date;
   absenceDate: Date;
   reason: string;
@@ -21,7 +21,7 @@ export interface ExcuseLetter {
 export interface Student {
   id: string;
   name: string;
-  class?: string;
+  class: string; // Now required
   password?: string;
 }
 

@@ -1,7 +1,7 @@
 
 import { useApp } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
-import { School } from 'lucide-react';
+import { School, Settings } from 'lucide-react';
 import ReviewerLogin from './ReviewerLogin';
 import { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -16,7 +16,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const { currentReviewer, logoutReviewer } = useApp();
+  const { currentReviewer, logoutReviewer, isAdmin } = useApp();
   const [showLogin, setShowLogin] = useState(false);
   const navigate = useNavigate();
   
@@ -73,6 +73,14 @@ const Header = () => {
                     {currentReviewer.role.charAt(0).toUpperCase() + currentReviewer.role.slice(1)}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    onSelect={() => navigate('/user-management')}
+                    className="cursor-pointer hover:bg-gray-100"
+                    disabled={!isAdmin}
+                  >
+                    <Settings className="mr-2 h-4 w-4" />
+                    User Management
+                  </DropdownMenuItem>
                   <DropdownMenuItem 
                     onSelect={logoutReviewer}
                     className="cursor-pointer hover:bg-gray-100"
