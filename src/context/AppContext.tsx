@@ -69,16 +69,13 @@ interface AppContextType {
   currentReviewer: Reviewer | null;
   isAdmin: boolean;
   
-  // Student actions
   submitLetter: (letter: Partial<ExcuseLetter>) => void;
   getStudentById: (id: string) => Student | undefined;
   
-  // Reviewer actions
   loginAsReviewer: (id: string) => void;
   logoutReviewer: () => void;
   updateLetterStatus: (letterId: string, status: Status, feedback?: string) => void;
   
-  // Filter actions
   filteredLetters: ExcuseLetter[];
   filterByDate: Date | null;
   filterByClass: string | null;
@@ -88,14 +85,11 @@ interface AppContextType {
   setFilterByStatus: (status: Status | null) => void;
   clearFilters: () => void;
   
-  // Update letter
   updateLetter: (id: string, updates: Partial<ExcuseLetter>) => void;
   deleteLetter: (id: string) => void;
   
-  // Update student
   updateStudent: (id: string, updates: Partial<Student>) => void;
   
-  // Update reviewer
   updateReviewer: (id: string, updates: Partial<Reviewer>) => void;
 }
 
@@ -109,7 +103,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   });
   
   const [students, setStudents] = useState<Student[]>(mockStudents);
-  const [reviewers] = useState<Reviewer[]>(mockReviewers);
+  const [reviewers, setReviewers] = useState<Reviewer[]>(mockReviewers);
   const [currentReviewer, setCurrentReviewer] = useState<Reviewer | null>(() => {
     const savedReviewer = localStorage.getItem('currentReviewer');
     return savedReviewer ? JSON.parse(savedReviewer) : null;

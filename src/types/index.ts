@@ -29,4 +29,5 @@ export interface Reviewer {
   id: string;
   name: string;
   role: 'teacher' | 'guidance' | 'admin';
+  password?: string; // Added password field as optional
 }
