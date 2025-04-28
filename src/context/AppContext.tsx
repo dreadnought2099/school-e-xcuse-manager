@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { ExcuseLetter, Status, Student, Reviewer } from '../types';
 import { toast } from '@/components/ui/sonner';
@@ -147,6 +146,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       id: uuidv4(),
       studentId: letter.studentId!,
       studentName: student.name,
+      class: student.class,
       date: letter.date || new Date(),
       absenceDate: letter.absenceDate || new Date(),
       reason: letter.reason || "",

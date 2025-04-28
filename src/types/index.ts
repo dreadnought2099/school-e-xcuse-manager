@@ -5,6 +5,7 @@ export interface ExcuseLetter {
   id: string;
   studentId: string;
   studentName: string;
+  class?: string;
   date: Date;
   absenceDate: Date;
   reason: string;
