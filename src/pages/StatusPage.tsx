@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { SearchIcon, ArrowLeft, Lock, User } from 'lucide-react';
+import { ArrowLeft, Lock, User, BookOpen, Eye, EyeOff, Search } from 'lucide-react';
 import { toast } from 'sonner';
 import LetterCard from '@/components/LetterCard';
 
@@ -21,6 +21,7 @@ const StatusPage = () => {
   const [password, setPassword] = useState('');
   const [searchedId, setSearchedId] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   
   // Redirect reviewers to dashboard
@@ -58,72 +59,92 @@ const StatusPage = () => {
     setIsAuthenticated(true);
     toast.success("Access granted");
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+    <div className="min-h-screen bg-gradient-to-tr from-school-100 via-indigo-50 to-white py-12">
       <div className="container max-w-6xl mx-auto px-4">
         <Button 
           variant="ghost" 
           onClick={() => navigate('/')}
-          className="mb-8 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 transition-all"
+          className="mb-8 text-school-700 hover:text-school-800 hover:bg-school-100/50 transition-all"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Home
         </Button>
 
         <div className="max-w-md mx-auto">
-          <Card className="border-none shadow-lg bg-white/80 backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-t-lg pb-8 pt-10">
-              <CardTitle className="text-3xl font-light">Check Status</CardTitle>
-              <CardDescription className="text-indigo-100 mt-2 font-light">
-                Enter your student ID and password to view your excuse letters
+          <Card className="overflow-hidden border-none shadow-xl bg-white/90 backdrop-blur-sm rounded-2xl">
+            <div className="bg-gradient-to-r from-school-600 to-school-800 pt-8 pb-12 px-6">
+              <div className="flex items-center justify-center mb-4">
+                <div className="bg-white/20 rounded-full p-3">
+                  <BookOpen className="h-6 w-6 text-white" />
+                </div>
+              </div>
+              <CardTitle className="text-3xl font-bold text-white text-center">Check Status</CardTitle>
+              <CardDescription className="text-white/90 mt-2 text-center">
+                Check the status of your excuse letters
               </CardDescription>
-            </CardHeader>
-            <CardContent className="px-6 pt-8 pb-6 -mt-4">
-              <div className="bg-white rounded-lg shadow-md p-6">
+            </div>
+            
+            <CardContent className="px-6 pt-0 pb-6 -mt-6 relative z-10">
+              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                 <form onSubmit={handleSearch} className="space-y-5">
-                  <div className="relative">
-                    <label htmlFor="studentId" className="block text-sm font-medium mb-2 text-gray-700">
+                  <div>
+                    <label htmlFor="studentId" className="block text-sm font-medium mb-2 text-gray-700 flex items-center">
+                      <User className="h-4 w-4 mr-2 text-school-600" />
                       Student ID
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <User className="h-5 w-5 text-gray-400" />
-                      </div>
                       <Input
                         id="studentId"
                         placeholder="Enter your student ID"
                         value={studentId}
                         onChange={(e) => setStudentId(e.target.value)}
-                        className="pl-10 bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500"
+                        className="bg-gray-50 focus-visible:ring-school-500 border-gray-200"
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="password" className="block text-sm font-medium mb-2 text-gray-700">
+                    <label htmlFor="password" className="block text-sm font-medium mb-2 text-gray-700 flex items-center">
+                      <Lock className="h-4 w-4 mr-2 text-school-600" />
                       Password
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Lock className="h-5 w-5 text-gray-400" />
-                      </div>
                       <Input
                         id="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500"
+                        className="bg-gray-50 focus-visible:ring-school-500 border-gray-200 pr-10"
                       />
+                      <button 
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </button>
                     </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Default password is your Student ID if not changed
+                    </p>
                   </div>
                   
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-2.5 rounded-lg transition-all"
+                    className="w-full bg-gradient-to-r from-school-600 to-school-800 hover:from-school-700 hover:to-school-900 text-white font-medium py-2.5 rounded-lg transition-all"
                   >
-                    <SearchIcon className="h-4 w-4 mr-2" />
+                    <Search className="h-4 w-4 mr-2" />
                     View My Letters
                   </Button>
                 </form>
@@ -133,18 +154,20 @@ const StatusPage = () => {
           
           {searchedId && isAuthenticated && (
             <div className="mt-8 space-y-6 animate-fade-in">
-              <h3 className="font-medium text-xl text-indigo-800 flex items-center">
-                <span className="bg-indigo-100 p-2 rounded-full mr-3">
-                  <User className="h-5 w-5 text-indigo-600" />
-                </span>
-                Results for Student ID: {searchedId}
-              </h3>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-gray-100">
+                <h3 className="font-medium text-xl text-school-800 flex items-center">
+                  <div className="bg-school-100 p-2 rounded-full mr-3">
+                    <User className="h-5 w-5 text-school-600" />
+                  </div>
+                  Results for Student ID: {searchedId}
+                </h3>
+              </div>
               
               {filteredLetters.length === 0 ? (
-                <Card className="border-none shadow-md bg-white/80 backdrop-blur-sm">
+                <Card className="border-none shadow-lg bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden">
                   <CardContent className="p-8 text-center">
                     <div className="bg-gray-50 rounded-full w-20 h-20 mx-auto flex items-center justify-center mb-4">
-                      <SearchIcon className="h-8 w-8 text-gray-400" />
+                      <Search className="h-8 w-8 text-gray-400" />
                     </div>
                     <p className="text-gray-600 text-lg">
                       No excuse letters found for this student ID
