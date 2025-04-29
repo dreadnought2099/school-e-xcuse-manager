@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { toast } from '@/components/ui/sonner';
@@ -88,9 +89,9 @@ const SubmissionForm = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      // Check file size (5MB limit)
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error("File size must be less than 5MB");
+      // Updated file size limit from 5MB to 50MB
+      if (file.size > 50 * 1024 * 1024) {
+        toast.error("File size must be less than 50MB");
         return;
       }
       setAttachment(file);
@@ -207,7 +208,7 @@ const SubmissionForm = () => {
           )}
         </div>
         <p className="text-xs text-muted-foreground">
-          Optional: Accepted file types: PDF, JPG, PNG, DOC, DOCX (max 5MB)
+          Optional: Accepted file types: PDF, JPG, PNG, DOC, DOCX (max 50MB)
         </p>
       </div>
       
