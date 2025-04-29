@@ -64,20 +64,20 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				school: {
-					100: '#e3f2fd',
-					200: '#bbdefb',
-					300: '#90caf9',
-					400: '#64b5f6',
-					500: '#2196f3',
-					600: '#1e88e5',
-					700: '#1976d2',
-					800: '#1565c0',
-					900: '#0d47a1',
+					100: '#e6f7ff',
+					200: '#bae7ff',
+					300: '#91d5ff',
+					400: '#69c0ff',
+					500: '#40a9ff',
+					600: '#1890ff',
+					700: '#096dd9',
+					800: '#0050b3',
+					900: '#003a8c',
 				},
 				status: {
-					pending: '#f5bd1f',
-					approved: '#2e7d32',
-					denied: '#c62828',
+					pending: '#faad14',
+					approved: '#52c41a',
+					denied: '#f5222d',
 				}
 			},
 			borderRadius: {
@@ -103,14 +103,36 @@ export default {
 					}
 				},
 				'fade-in': {
-					'0%': { opacity: '0' },
-					'100%': { opacity: '1' }
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
 				},
+				'slide-in': {
+					'0%': { transform: 'translateX(-10px)', opacity: '0' },
+					'100%': { transform: 'translateX(0)', opacity: '1' }
+				},
+				'slide-up': {
+					'0%': { transform: 'translateY(10px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'pulse': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' }
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.3s ease-out'
+				'fade-in': 'fade-in 0.4s ease-out',
+				'slide-in': 'slide-in 0.4s ease-out',
+				'slide-up': 'slide-up 0.4s ease-out',
+				'pulse': 'pulse 2s infinite'
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+				'gradient-primary': 'linear-gradient(to right, #1890ff, #096dd9)',
+				'gradient-secondary': 'linear-gradient(to right, #bae7ff, #40a9ff)',
+				'gradient-card': 'linear-gradient(135deg, #ffffff, #f0f7ff)',
+				'gradient-hero': 'linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%)'
 			}
 		}
 	},

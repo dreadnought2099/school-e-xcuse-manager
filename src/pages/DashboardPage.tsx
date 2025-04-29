@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { useApp } from '@/context/AppContext';
 import { useNavigate } from 'react-router-dom';
@@ -5,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import FilterBar from '@/components/FilterBar';
 import LetterCard from '@/components/LetterCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import StudentPasswordDialog from '@/components/StudentPasswordDialog';
+import { FileCheck, FileX, Timer, BarChart3 } from 'lucide-react';
 
 const DashboardPage = () => {
   const { 
@@ -41,83 +42,155 @@ const DashboardPage = () => {
   const activeTab = filterByStatus || 'all';
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-2">Reviewer Dashboard</h1>
-      <p className="text-gray-600 mb-6">
-        Review and manage student excuse letters
-      </p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Card>
-          <CardHeader className="py-4">
-            <CardTitle className="text-lg flex justify-between items-center">
-              <span>Pending</span>
-              <span className="bg-status-pending text-white px-2 py-0.5 rounded-full text-sm">
-                {pendingCount}
-              </span>
-            </CardTitle>
-          </CardHeader>
-        </Card>
+    <div className="min-h-screen bg-gradient-to-br from-school-50 to-white">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row justify-between md:items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-school-800">Staff Dashboard</h1>
+            <p className="text-gray-600 mt-1">
+              Manage and review student excuse letters
+            </p>
+          </div>
+          <div className="mt-4 md:mt-0">
+            <FilterBar />
+          </div>
+        </div>
         
-        <Card>
-          <CardHeader className="py-4">
-            <CardTitle className="text-lg flex justify-between items-center">
-              <span>Approved</span>
-              <span className="bg-status-approved text-white px-2 py-0.5 rounded-full text-sm">
-                {approvedCount}
-              </span>
-            </CardTitle>
-          </CardHeader>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className="border-none shadow-md bg-white card-hover">
+            <CardHeader className="pb-3">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <div className="mr-3 bg-amber-100 p-2 rounded-lg">
+                    <Timer className="h-5 w-5 text-amber-600" />
+                  </div>
+                  <CardTitle className="text-lg">Pending</CardTitle>
+                </div>
+                <span className="bg-status-pending text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
+                  {pendingCount}
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-500 text-sm">
+                {pendingCount === 0 ? "No pending letters to review" : 
+                 pendingCount === 1 ? "1 letter awaiting review" :
+                 `${pendingCount} letters awaiting review`}
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-none shadow-md bg-white card-hover">
+            <CardHeader className="pb-3">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <div className="mr-3 bg-green-100 p-2 rounded-lg">
+                    <FileCheck className="h-5 w-5 text-green-600" />
+                  </div>
+                  <CardTitle className="text-lg">Approved</CardTitle>
+                </div>
+                <span className="bg-status-approved text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
+                  {approvedCount}
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-500 text-sm">
+                {approvedCount === 0 ? "No approved letters" : 
+                 approvedCount === 1 ? "1 letter approved" :
+                 `${approvedCount} letters approved`}
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-none shadow-md bg-white card-hover">
+            <CardHeader className="pb-3">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <div className="mr-3 bg-red-100 p-2 rounded-lg">
+                    <FileX className="h-5 w-5 text-red-600" />
+                  </div>
+                  <CardTitle className="text-lg">Denied</CardTitle>
+                </div>
+                <span className="bg-status-denied text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
+                  {deniedCount}
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-500 text-sm">
+                {deniedCount === 0 ? "No denied letters" : 
+                 deniedCount === 1 ? "1 letter denied" :
+                 `${deniedCount} letters denied`}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
         
-        <Card>
-          <CardHeader className="py-4">
-            <CardTitle className="text-lg flex justify-between items-center">
-              <span>Denied</span>
-              <span className="bg-status-denied text-white px-2 py-0.5 rounded-full text-sm">
-                {deniedCount}
-              </span>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      </div>
-      
-      <FilterBar />
-      
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle>Excuse Letters</CardTitle>
-          <CardDescription>
-            Review and process student excuse letter submissions
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue={activeTab} value={activeTab} onValueChange={handleTabChange}>
-            <TabsList className="mb-4">
-              <TabsTrigger value="all">All</TabsTrigger>
-              <TabsTrigger value="pending">Pending</TabsTrigger>
-              <TabsTrigger value="approved">Approved</TabsTrigger>
-              <TabsTrigger value="denied">Denied</TabsTrigger>
-            </TabsList>
+        <Card className="mb-6 border-none shadow-lg overflow-hidden bg-white rounded-xl">
+          <CardHeader className="border-b border-gray-100 bg-gradient-to-r from-white to-school-50 flex flex-col md:flex-row justify-between md:items-center">
+            <div>
+              <div className="flex items-center mb-2">
+                <div className="bg-school-100 p-2 rounded-lg mr-3">
+                  <BarChart3 className="h-5 w-5 text-school-700" />
+                </div>
+                <CardTitle>Excuse Letters</CardTitle>
+              </div>
+              <CardDescription>
+                Review and process student submissions
+              </CardDescription>
+            </div>
             
+            <Tabs 
+              defaultValue={activeTab} 
+              value={activeTab} 
+              onValueChange={handleTabChange}
+              className="mt-4 md:mt-0"
+            >
+              <TabsList className="bg-school-50">
+                <TabsTrigger value="all">All</TabsTrigger>
+                <TabsTrigger value="pending">Pending</TabsTrigger>
+                <TabsTrigger value="approved">Approved</TabsTrigger>
+                <TabsTrigger value="denied">Denied</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </CardHeader>
+          
+          <CardContent className="p-6">
             <TabsContent value={activeTab}>
               {filteredLetters.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">
+                <div className="text-center py-16 bg-gray-50 rounded-lg">
+                  <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-8 w-8 text-gray-400" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-500 text-lg">
                     No excuse letters found matching your filters
+                  </p>
+                  <p className="text-gray-400 mt-2">
+                    Try changing your filters or check back later
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {filteredLetters.map((letter) => (
-                    <LetterCard key={letter.id} letter={letter} />
+                    <div key={letter.id} className="animate-fade-in">
+                      <LetterCard letter={letter} />
+                    </div>
                   ))}
                 </div>
               )}
             </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
