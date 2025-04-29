@@ -153,42 +153,136 @@ const DashboardPage = () => {
                 <TabsTrigger value="approved">Approved</TabsTrigger>
                 <TabsTrigger value="denied">Denied</TabsTrigger>
               </TabsList>
+              
+              <TabsContent value="all">
+                {filteredLetters.length === 0 ? (
+                  <div className="text-center py-16 bg-gray-50 rounded-lg mt-6">
+                    <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        className="h-8 w-8 text-gray-400" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-500 text-lg">
+                      No excuse letters found matching your filters
+                    </p>
+                    <p className="text-gray-400 mt-2">
+                      Try changing your filters or check back later
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+                    {filteredLetters.map((letter) => (
+                      <div key={letter.id} className="animate-fade-in">
+                        <LetterCard letter={letter} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="pending">
+                {filteredLetters.length === 0 ? (
+                  <div className="text-center py-16 bg-gray-50 rounded-lg mt-6">
+                    <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        className="h-8 w-8 text-gray-400" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-500 text-lg">
+                      No pending letters found
+                    </p>
+                    <p className="text-gray-400 mt-2">
+                      Check back later for new submissions
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+                    {filteredLetters.map((letter) => (
+                      <div key={letter.id} className="animate-fade-in">
+                        <LetterCard letter={letter} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="approved">
+                {filteredLetters.length === 0 ? (
+                  <div className="text-center py-16 bg-gray-50 rounded-lg mt-6">
+                    <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        className="h-8 w-8 text-gray-400" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-500 text-lg">
+                      No approved letters found
+                    </p>
+                    <p className="text-gray-400 mt-2">
+                      Approved letters will appear here
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+                    {filteredLetters.map((letter) => (
+                      <div key={letter.id} className="animate-fade-in">
+                        <LetterCard letter={letter} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="denied">
+                {filteredLetters.length === 0 ? (
+                  <div className="text-center py-16 bg-gray-50 rounded-lg mt-6">
+                    <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        className="h-8 w-8 text-gray-400" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-500 text-lg">
+                      No denied letters found
+                    </p>
+                    <p className="text-gray-400 mt-2">
+                      Denied letters will appear here
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+                    {filteredLetters.map((letter) => (
+                      <div key={letter.id} className="animate-fade-in">
+                        <LetterCard letter={letter} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
             </Tabs>
           </CardHeader>
-          
-          <CardContent className="p-6">
-            <TabsContent value={activeTab}>
-              {filteredLetters.length === 0 ? (
-                <div className="text-center py-16 bg-gray-50 rounded-lg">
-                  <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-8 w-8 text-gray-400" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-500 text-lg">
-                    No excuse letters found matching your filters
-                  </p>
-                  <p className="text-gray-400 mt-2">
-                    Try changing your filters or check back later
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {filteredLetters.map((letter) => (
-                    <div key={letter.id} className="animate-fade-in">
-                      <LetterCard letter={letter} />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </TabsContent>
-          </CardContent>
         </Card>
       </div>
     </div>
