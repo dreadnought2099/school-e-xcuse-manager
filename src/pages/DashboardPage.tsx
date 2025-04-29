@@ -58,18 +58,16 @@ const DashboardPage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="border-none shadow-md bg-white card-hover">
-            <CardHeader className="pb-3">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                  <div className="mr-3 bg-amber-100 p-2 rounded-lg">
-                    <Timer className="h-5 w-5 text-amber-600" />
-                  </div>
-                  <CardTitle className="text-lg">Pending</CardTitle>
+            <CardHeader className="pb-3 flex flex-row items-center justify-between">
+              <div className="flex items-center">
+                <div className="mr-3 bg-amber-100 p-2 rounded-lg">
+                  <Timer className="h-5 w-5 text-amber-600" />
                 </div>
-                <span className="bg-status-pending text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
-                  {pendingCount}
-                </span>
+                <CardTitle className="text-lg">Pending</CardTitle>
               </div>
+              <span className="bg-status-pending text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
+                {pendingCount}
+              </span>
             </CardHeader>
             <CardContent>
               <p className="text-gray-500 text-sm">
@@ -81,18 +79,16 @@ const DashboardPage = () => {
           </Card>
           
           <Card className="border-none shadow-md bg-white card-hover">
-            <CardHeader className="pb-3">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                  <div className="mr-3 bg-green-100 p-2 rounded-lg">
-                    <FileCheck className="h-5 w-5 text-green-600" />
-                  </div>
-                  <CardTitle className="text-lg">Approved</CardTitle>
+            <CardHeader className="pb-3 flex flex-row items-center justify-between">
+              <div className="flex items-center">
+                <div className="mr-3 bg-green-100 p-2 rounded-lg">
+                  <FileCheck className="h-5 w-5 text-green-600" />
                 </div>
-                <span className="bg-status-approved text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
-                  {approvedCount}
-                </span>
+                <CardTitle className="text-lg">Approved</CardTitle>
               </div>
+              <span className="bg-status-approved text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
+                {approvedCount}
+              </span>
             </CardHeader>
             <CardContent>
               <p className="text-gray-500 text-sm">
@@ -104,18 +100,16 @@ const DashboardPage = () => {
           </Card>
           
           <Card className="border-none shadow-md bg-white card-hover">
-            <CardHeader className="pb-3">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                  <div className="mr-3 bg-red-100 p-2 rounded-lg">
-                    <FileX className="h-5 w-5 text-red-600" />
-                  </div>
-                  <CardTitle className="text-lg">Denied</CardTitle>
+            <CardHeader className="pb-3 flex flex-row items-center justify-between">
+              <div className="flex items-center">
+                <div className="mr-3 bg-red-100 p-2 rounded-lg">
+                  <FileX className="h-5 w-5 text-red-600" />
                 </div>
-                <span className="bg-status-denied text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
-                  {deniedCount}
-                </span>
+                <CardTitle className="text-lg">Denied</CardTitle>
               </div>
+              <span className="bg-status-denied text-white px-3 py-1 rounded-full font-medium inline-flex items-center justify-center min-w-[2rem]">
+                {deniedCount}
+              </span>
             </CardHeader>
             <CardContent>
               <p className="text-gray-500 text-sm">
