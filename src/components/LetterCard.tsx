@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { ExcuseLetter } from '@/types';
 import { useApp } from '@/context/AppContext';
@@ -121,8 +122,8 @@ const LetterCard = ({ letter }: LetterCardProps) => {
             </div>
             
             {letter.attachmentUrl && (
-              <div className="mt-2 flex items-center gap-2 text-sm">
-                <Paperclip className="h-4 w-4" />
+              <div className="mt-3 flex items-center gap-2 text-sm">
+                <Paperclip className="h-4 w-4 shrink-0" />
                 <Button 
                   variant="link" 
                   className="p-0 h-auto"
@@ -135,9 +136,9 @@ const LetterCard = ({ letter }: LetterCardProps) => {
             )}
             
             {letter.feedback && (
-              <div className="mt-2 p-2 bg-muted rounded-md">
+              <div className="mt-3 p-3 bg-muted rounded-md">
                 <h4 className="text-sm font-medium">Feedback:</h4>
-                <p className="text-sm">{letter.feedback}</p>
+                <p className="text-sm mt-1">{letter.feedback}</p>
                 {letter.reviewerName && (
                   <p className="text-xs text-muted-foreground mt-1">
                     - {letter.reviewerName}
@@ -148,7 +149,7 @@ const LetterCard = ({ letter }: LetterCardProps) => {
           </div>
         </CardContent>
         
-        <CardFooter className="flex justify-between">
+        <CardFooter className="flex justify-between pt-4">
           {canEdit && (
             <div className="flex gap-2">
               <Button
@@ -198,6 +199,22 @@ const LetterCard = ({ letter }: LetterCardProps) => {
                     <h3 className="font-medium">Reason</h3>
                     <p>{letter.reason}</p>
                   </div>
+                  
+                  {letter.attachmentUrl && (
+                    <div>
+                      <h3 className="font-medium">Attachment</h3>
+                      <div className="mt-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setShowImagePreview(true)}
+                        >
+                          <Eye className="h-4 w-4 mr-1" />
+                          View Attachment
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                   
                   <div>
                     <h3 className="font-medium">Feedback (Optional)</h3>
