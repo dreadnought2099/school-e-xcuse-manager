@@ -46,21 +46,26 @@ const Header = () => {
               Home
             </Button>
             
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/submit')}
-              className="text-gray-700 hover:text-school-700 hover:bg-school-50"
-            >
-              Submit Letter
-            </Button>
-            
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/status')}
-              className="text-gray-700 hover:text-school-700 hover:bg-school-50"
-            >
-              Check Status
-            </Button>
+            {/* Only show Submit Letter and Check Status buttons when not logged in as staff */}
+            {!currentReviewer && (
+              <>
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate('/submit')}
+                  className="text-gray-700 hover:text-school-700 hover:bg-school-50"
+                >
+                  Submit Letter
+                </Button>
+                
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate('/status')}
+                  className="text-gray-700 hover:text-school-700 hover:bg-school-50"
+                >
+                  Check Status
+                </Button>
+              </>
+            )}
           </div>
           
           <div className="flex items-center gap-3">
@@ -150,14 +155,18 @@ const Header = () => {
                     >
                       Dashboard
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onSelect={() => navigate('/user-management')}
-                      className="cursor-pointer text-gray-700 hover:bg-gray-100 focus:text-gray-700"
-                      disabled={!isAdmin}
-                    >
-                      <Settings className="mr-2 h-4 w-4" />
-                      User Management
-                    </DropdownMenuItem>
+                    
+                    {/* Only show User Management for admin users */}
+                    {isAdmin && (
+                      <DropdownMenuItem 
+                        onSelect={() => navigate('/user-management')}
+                        className="cursor-pointer text-gray-700 hover:bg-gray-100 focus:text-gray-700"
+                      >
+                        <Settings className="mr-2 h-4 w-4" />
+                        User Management
+                      </DropdownMenuItem>
+                    )}
+                    
                     <DropdownMenuSeparator />
                     <DropdownMenuItem 
                       onSelect={logoutReviewer}
