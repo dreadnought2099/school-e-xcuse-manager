@@ -24,7 +24,7 @@ const HomePage = () => {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2">
               <h1 className="text-4xl lg:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-school-800 to-school-600">
-                School Excuse Letter Management
+                Student Excuse Letter Management
               </h1>
               <p className="text-xl mb-8 text-gray-600 leading-relaxed">
                 A modern platform for students to submit, track, and manage absence excuse letters efficiently

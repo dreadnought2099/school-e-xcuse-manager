@@ -5,14 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Mock data for development
 const mockStudents: Student[] = [
-  { id: "S001", name: "John Doe", class: "12A" },
-  { id: "S002", name: "Jane Smith", class: "11B" },
-  { id: "S003", name: "Alex Johnson", class: "10C" },
+  { id: "S001", name: "Efren Jacob Centillas", class: "12A" },
+  { id: "S002", name: "Thess Busalanan", class: "11B" },
+  { id: "S003", name: "Raymart Magallanes", class: "10C" },
 ];
 
 const mockReviewers: Reviewer[] = [
-  { id: "R001", name: "Ms. Peterson", role: "teacher" },
-  { id: "R002", name: "Mr. Williams", role: "guidance" },
+  { id: "R001", name: "Ms. Johnson", role: "teacher" },
+  { id: "R002", name: "Mr. Terrific", role: "guidance" },
   { id: "R003", name: "Dr. Carter", role: "admin" },
 ];
 
@@ -20,7 +20,7 @@ const mockLetters: ExcuseLetter[] = [
   {
     id: uuidv4(),
     studentId: "S001",
-    studentName: "John Doe",
+    studentName: "Efren Jacob Centillas",
     class: "12A", // Added class property
     date: new Date(),
     absenceDate: new Date(Date.now() - 86400000 * 2), // 2 days ago
@@ -33,14 +33,14 @@ const mockLetters: ExcuseLetter[] = [
   {
     id: uuidv4(),
     studentId: "S002",
-    studentName: "Jane Smith",
+    studentName: "Thess Busalanan",
     class: "11B", // Added class property
     date: new Date(Date.now() - 86400000), // 1 day ago
     absenceDate: new Date(Date.now() - 86400000 * 3), // 3 days ago
     reason: "Family emergency",
     status: "approved",
     reviewerId: "R001",
-    reviewerName: "Ms. Peterson",
+    reviewerName: "Ms. Johnson",
     feedback: "Approved. Please catch up on missed work.",
     createdAt: new Date(Date.now() - 86400000),
     updatedAt: new Date(),
@@ -48,14 +48,14 @@ const mockLetters: ExcuseLetter[] = [
   {
     id: uuidv4(),
     studentId: "S003",
-    studentName: "Alex Johnson",
+    studentName: "Raymart Magallanes",
     class: "10C", // Added class property
     date: new Date(Date.now() - 86400000 * 2), // 2 days ago
     absenceDate: new Date(Date.now() - 86400000 * 4), // 4 days ago
     reason: "Transportation issues",
     status: "denied",
     reviewerId: "R002",
-    reviewerName: "Mr. Williams",
+    reviewerName: "Mr. Terrific",
     feedback: "Insufficient explanation. Please provide more details.",
     createdAt: new Date(Date.now() - 86400000 * 2),
     updatedAt: new Date(),

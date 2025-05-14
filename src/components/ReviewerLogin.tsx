@@ -86,9 +86,9 @@ const ReviewerLogin = ({ onSuccess }: ReviewerLogin) => {
         <div className="text-sm text-gray-500 mt-4">
           <p className="mb-2">Demo Reviewer Credentials:</p>
           <ul className="list-disc pl-5">
-            <li>Ms. Peterson (teacher) - Password: teacher123</li>
-            <li>Mr. Williams (guidance) - Password: guidance123</li>
-            <li>Dr. Carter (admin) - Password: admin123</li>
+            <li>Ms. Johnson (teacher) - Password: teacher123</li>
+            <li>Mr. Terrific (guidance) - Password: guidance123</li>
+            <li>Dr. Strange (admin) - Password: admin123</li>
           </ul>
         </div>
       </div>

@@ -32,7 +32,7 @@ const Header = () => {
               <BookOpen className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-school-800 hidden md:block">School Excuse System</h1>
+              <h1 className="text-lg font-bold text-school-800 hidden md:block">Student Excuse Letter</h1>
               <h1 className="text-lg font-bold text-school-800 md:hidden">SES</h1>
             </div>
           </div>
